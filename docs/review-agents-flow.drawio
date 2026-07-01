@@ -1,0 +1,47 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="review-agents" id="revflow">
+    <mxGraphModel dx="1400" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="claude-review-agents : check the work before it ships" style="text;html=1;fontSize=20;fontStyle=1;fontColor=#0050b3;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="900" height="36" as="geometry"/></mxCell>
+
+        <mxCell id="legend" value="Legend&#10;• green = trigger / done&#10;• blue = review agent (own context, read-only)&#10;• red diamond = decision&#10;• orange = findings artifact&#10;Each agent reports; none edits your files." style="rounded=0;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=0;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;whiteSpace=wrap;html=1;fontFamily=Helvetica;" vertex="1" parent="1"><mxGeometry x="1210" y="70" width="300" height="150" as="geometry"/></mxCell>
+
+        <!-- trigger -->
+        <mxCell id="trig" value="code change&#10;/ open PR" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="60" y="330" width="180" height="70" as="geometry"/></mxCell>
+
+        <!-- STAGE: agents -->
+        <mxCell id="s2" value="Review agents  (spawned in parallel, each in its own context)" style="rounded=0;fillColor=#fafafa;strokeColor=#0050b3;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;dashed=1;strokeWidth=2;html=1;" vertex="1" parent="1"><mxGeometry x="330" y="80" width="470" height="600" as="geometry"/></mxCell>
+        <mxCell id="a1" value="code-reviewer&#10;quality, duplication, edge cases, test gaps&#10;(Critical / Warning / Suggestion)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="360" y="120" width="410" height="80" as="geometry"/></mxCell>
+        <mxCell id="a2" value="ai-signal-reviewer&#10;AI-writing tells in prose (docs, PRs, commits)&#10;runs on the haiku model to stay cheap" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="360" y="240" width="410" height="80" as="geometry"/></mxCell>
+        <mxCell id="a3" value="deploy-guard&#10;secrets / PII leaks + stack-specific release-readiness&#10;(Blocker / Warning / Note)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="360" y="360" width="410" height="80" as="geometry"/></mxCell>
+        <mxCell id="a4" value="pr-validator&#10;detect + run the test suite → per-test pass/fail&#10;ready-to-release verdict" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="360" y="480" width="410" height="80" as="geometry"/></mxCell>
+
+        <!-- STAGE: outcome -->
+        <mxCell id="s3" value="Outcome" style="rounded=0;fillColor=#fafafa;strokeColor=#0050b3;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=6;dashed=1;strokeWidth=2;html=1;" vertex="1" parent="1"><mxGeometry x="850" y="80" width="330" height="600" as="geometry"/></mxCell>
+        <mxCell id="agg" value="findings by severity&#10;+ pass/fail verdict" style="shape=document;fillColor=#ffe6cc;strokeColor=#d79b00;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="890" y="150" width="250" height="80" as="geometry"/></mxCell>
+        <mxCell id="dec" value="blockers or&#10;failing tests?" style="rhombus;fillColor=#f8cecc;strokeColor=#b85450;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="905" y="290" width="220" height="100" as="geometry"/></mxCell>
+        <mxCell id="fix" value="fix and re-run" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;whiteSpace=wrap;" vertex="1" parent="1"><mxGeometry x="880" y="460" width="130" height="50" as="geometry"/></mxCell>
+        <mxCell id="ready" value="ready to ship&#10;hand to /release" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;html=1;whiteSpace=wrap;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="1030" y="450" width="140" height="70" as="geometry"/></mxCell>
+
+        <!-- edges: trigger -> agents -->
+        <mxCell id="t1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#82b366;strokeWidth=2;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="trig" target="a1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="t2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#82b366;strokeWidth=2;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="trig" target="a2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="t3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#82b366;strokeWidth=2;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="trig" target="a3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="t4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#82b366;strokeWidth=2;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="trig" target="a4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- agents -> aggregate -->
+        <mxCell id="g1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#0050b3;strokeWidth=2;html=1;" edge="1" parent="1" source="a1" target="agg"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#0050b3;strokeWidth=2;html=1;" edge="1" parent="1" source="a2" target="agg"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#0050b3;strokeWidth=2;html=1;" edge="1" parent="1" source="a3" target="agg"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#0050b3;strokeWidth=2;html=1;" edge="1" parent="1" source="a4" target="agg"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <!-- outcome -->
+        <mxCell id="o1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#0050b3;strokeWidth=2;html=1;" edge="1" parent="1" source="agg" target="dec"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="o2" value="yes: fix" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#b85450;strokeWidth=2;html=1;fontColor=#b85450;" edge="1" parent="1" source="dec" target="fix"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="o3" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#82b366;strokeWidth=2;html=1;fontColor=#82b366;" edge="1" parent="1" source="dec" target="ready"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="o4" value="loop back to the branch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;strokeColor=#b85450;strokeWidth=2;dashed=1;html=1;fontColor=#b85450;" edge="1" parent="1" source="fix" target="trig"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="150" y="640"/></Array></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

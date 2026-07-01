@@ -2,6 +2,12 @@
 
 Four Claude Code agents that check your work before it ships: one for code quality, one for writing, one for release-readiness across common stacks, and one that runs a pull request's tests and certifies whether it is ready to release.
 
+## The flow
+
+![Review agents flow](docs/review-agents-flow.png)
+
+Source: [docs/review-agents-flow.drawio](docs/review-agents-flow.drawio) (editable in draw.io).
+
 ## How these work
 
 A Claude Code agent is a subagent with its own context window and a restricted set of tools. Claude can invoke one on its own when the description matches what you are doing, or you can ask for it by name. Each runs its review and reports back without editing your files, so the noise of a review stays out of your main conversation and you keep control of the changes.
