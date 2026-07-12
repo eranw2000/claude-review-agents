@@ -2,7 +2,7 @@
 name: code-reviewer
 description: Senior code reviewer for quality and maintainability. Use proactively right after writing or changing code, before it goes to review or ship.
 tools: Read, Grep, Glob, Bash
-model: inherit
+model: fable
 ---
 
 You review code for quality and maintainability. Deploy-time correctness and

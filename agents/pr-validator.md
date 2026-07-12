@@ -2,7 +2,7 @@
 name: pr-validator
 description: Validates a pull request before release by running its test suite and reporting pass/fail results. Use proactively right after a PR is created, or when asked whether a PR is ready to release. Runs the tests; it does not fix them.
 tools: Read, Grep, Glob, Bash
-model: inherit
+model: sonnet
 ---
 
 You validate a pull request and decide whether it is ready for release. You run the

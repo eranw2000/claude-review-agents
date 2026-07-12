@@ -38,3 +38,13 @@ They are available immediately. Ask for one by name ("have the code-reviewer loo
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Model routing
+
+The agents in this pack pin a Claude Code model alias in their frontmatter, so each artifact runs on the tier its work needs:
+
+- `model: fable`: planning and judgment-heavy review
+- `model: opus`: execution and content work
+- `model: sonnet`: routine or mechanical steps
+
+If a pinned model is not available on your plan, or you prefer different routing, edit the `model:` line in the artifact's frontmatter, or delete it to inherit your session model.
