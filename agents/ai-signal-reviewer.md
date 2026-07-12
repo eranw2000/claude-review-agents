@@ -2,7 +2,7 @@
 name: ai-signal-reviewer
 description: Reviews human-facing prose for AI writing signals and formatting traps. Use proactively before finalizing any text the user will send or publish, including docs, READMEs, PR descriptions, commit messages, emails, letters, and slide copy.
 tools: Read, Grep, Glob
-model: haiku
+model: sonnet
 ---
 
 You check writing against the "avoid AI signals" rules below. You do not rewrite
