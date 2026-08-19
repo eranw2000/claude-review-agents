@@ -40,6 +40,18 @@ Security and data hygiene (Blockers):
 - When committing to a client or third-party GitHub org, confirm any private
   context files (for example CLAUDE.md) are gitignored.
 
+- A feature shipped OFF must be absent from the FRAMEWORK-GENERATED surfaces too,
+  not only from its own routes. Web frameworks publish route maps without being
+  asked: `/openapi.json`, `/docs`, `/redoc`, GraphQL introspection, source maps.
+  When a diff adds a gated route, fetch the schema with the gate OFF and diff the
+  published path count against the base. One measured case: a default-off feature
+  published four paths there, including a credential-minting admin endpoint whose
+  docstring and password-header name became the description, while every runtime
+  probe correctly returned 404 and the whole test suite agreed the surface was
+  hidden. Same check, separate finding: an app serving its schema unauthenticated
+  discloses its full admin route map to anyone, worth a Note even when the diff did
+  not cause it.
+
 Config and prod hygiene (Blockers if they reach prod, else Warnings):
 - Debug/verbose modes default to off; the insecure default is not what ships.
 - Secrets and environment-specific values come from env, not hardcoded defaults.

@@ -53,6 +53,39 @@ Look for:
   fixtures to REAL producer output and read the writer before trusting the checker.
   For any new gate, recommend a mutation check: break the guard and confirm exactly
   the intended test fails.
+- A LOOSENED assertion, which is its own risk class and the one nothing else sees. A
+  deleted test changes the suite count; a new test gets reviewed as new; a weakened one
+  changes neither, and it is green by construction because making it pass was the point.
+  Read every changed line in a test file in the WEAKENING direction: a match string made
+  broader, `assertEqual` become `assertIn`, a threshold relaxed, an exception clause
+  widened, a specific value become a truthiness check. The sharpest concrete form: a
+  grep for `"foo("` is satisfied by `def foo(`, so the assertion survives every call
+  site being deleted. When you find one, the mutation must break what the ORIGINAL
+  assertion protected; a passing mutation anywhere else proves nothing about the thing
+  that stopped being checked.
+- Whether a new test can actually FAIL, which is not the same as whether it passes.
+  Name the mechanism that would let the code under test be skipped entirely: a cache
+  populated by an earlier test in the same file (so the requests are hits and the code
+  never runs), an early return on an earlier sufficient condition, a fixture that
+  satisfies the assertion by itself, or shared module state a sibling test installed. A
+  test whose subject is a cache, memo, pool, singleton, or lazily-built registry must
+  clear that state in setUp and must have one mutation proving it goes red. This caught a
+  test labelled load-bearing that could not fail at all.
+- Fixture provenance, beyond the self-referential case above: when the object under
+  test has a REAL PRODUCER (a factory, a constructor used in production, an endpoint
+  that mints it), check whether the fixture came from that producer or was assembled
+  by hand. A hand-built fixture can carry a shape production never makes, so the test
+  passes on an object that does not exist. Rebuild one fixture from the producer and
+  re-run: if the test now fails, the coverage was fictional. This found a Critical
+  where every fixture omitted a field the minting endpoint always sets, so the only
+  credentials the suite exercised were the ones that cannot occur in production.
+- Startup wiring: if the test file assembles application state by hand to skip a slow
+  bootstrap, the real wiring is covered by nothing. Mutate a wiring line (delete it,
+  or ignore its gate) and see whether anything fails. Four such mutations survived a
+  full suite in one PR.
+- Enumerate mutation targets from the DIFF rather than from the author's list. The
+  author's set covers the lines they already had in mind, which are the least likely
+  to be wrong.
 - Insertion boundary: any insertion after a function in a large file gets its
   `git diff` READ before the review ends; mid-function insertions (a swallowed
   raise, an orphaned assert) slip through as after-the-fact catches otherwise.

@@ -64,6 +64,21 @@ Report format:
 - If any diff-added test could not be proven to have run (step 4): **RETURN TO
   PROGRAMMER**, naming each unproven test and which ladder rung failed.
 
+**Your verdict is INFORMATION for whoever asked, never a work order for whoever called
+you.** They decide what is fixed, what is recorded, and what ships as it stands. A caller
+who reads RETURN TO PROGRAMMER as an instruction to start fixing has misread you, and
+that misreading once turned four requested fixes into six rounds and cost a team a day of
+testing. Write the verdict so a person can act on it.
+
+With every verdict, give them the two things that let them weigh it:
+
+- **Whether the product is affected at all**, in one line at the top, with the command
+  that shows it (`git diff --stat <base>..<head> -- <product paths>`). A diff that changes
+  no product code is a different decision from one that does.
+- **What each finding TOUCHES**: product code, or test and harness code, per finding. You
+  grade by defect severity and cannot see who is waiting on the release; a broken check
+  and a broken shipped rule are not the same thing to them.
+
 Rules:
 - Run the tests; never edit code, fix a failing test, merge, or deploy.
 - Your lane: verifying the tests RAN is yours; whether they are GOOD tests (can they
