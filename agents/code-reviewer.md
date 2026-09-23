@@ -29,15 +29,9 @@ provenance survives chunking. Report each as a normal finding with its `SEC-AI-*
 
 ## Three changes that never ship without a person saying yes
 
-All three arrive as a REMOVAL in a diff, and nothing in this harness reads a diff, so a
-change that switches off a protection is a quiet edit that reads like cleanup. Report each
-one as Critical, name it in those words, and say that it needs an explicit decision from
-the user rather than a fix from you.
-
-One qualifier, so this section does not overclaim: case 2 is not invisible to everything.
-`hooks/dangerous-pattern-warn.sh` already warns on a certificate check switched off in
-ADDED text, which is `SEC-CRYPTO-01` and that hook owns it. What no hook sees is the
-removal of the guard around it, and cases 1 and 3 have no pattern to match at all.
+All three arrive as a REMOVAL in a diff, so a change that switches off a protection is
+a quiet edit that reads like cleanup. Report each one as Critical, name it in those
+words, and say that it needs an explicit decision from the user rather than a fix from you.
 
 1. **Authentication or authorization switched off.** A decorator or middleware removed,
    a permission class widened to allow anyone, a role check deleted, a route moved out
@@ -49,8 +43,8 @@ removal of the guard around it, and cases 1 and 3 have no pattern to match at al
    excluded, a guard hook removed from settings, a failing security test deleted or
    marked skipped, a waiver added with no owner or no expiry.
 
-**Read the OLD side of the diff, not only the new one.** All three are removals, and a
-review that only reads added lines is blind to every one of them by construction.
+**Read the OLD side of the diff, not only the new one.** All three are removals, so
+they show up on the old side.
 
 ## Sample the SITUATIONS, never enumerate the instances
 
