@@ -33,6 +33,7 @@ They are available immediately. Ask for one by name ("have the code-reviewer loo
 - None of the agents edit your files; they report so you decide what to change. Three are read-only reviewers; `pr-validator` also runs the test suite (it executes tests but changes nothing else).
 - `code-reviewer` and `deploy-guard` split the work: `code-reviewer` stays on code quality, `deploy-guard` covers the shipping checks (secrets, framework correctness, deploy target). Running both before a release covers each side once.
 - `pr-validator` is the test gate before release: run it right after you open a PR to get a pass/fail verdict on the suite. It answers "do the tests pass?", which the two reviewers do not check. To name dead or unregistered tests it can use the `test-integrity-check.py` hook from the companion `claude-release-workflow` pack, and works without it (falling back to running each added test directly).
+- `code-reviewer` checks AI-agent code against the AI and agent security rules (`ai-agent-standards.md`) from the companion [secure-dev-guardrails](https://github.com/eranw2000/secure-dev-guardrails) pack (its installer puts the file in `/usr/local/share/secure-dev-guardrails/standards/`). Without that pack it still reviews; it just has no rule file to cite.
 - `ai-signal-reviewer` enforces a plain-prose style (no em dashes, no marketing vocabulary, no box-drawing characters in tables). Edit the rule list in the file to match your own house style.
 
 ## License
@@ -43,7 +44,7 @@ MIT. See [LICENSE](LICENSE).
 
 The agents in this pack pin a Claude Code model alias in their frontmatter, so each artifact runs on the tier its work needs:
 
-- `model: fable`: planning and judgment-heavy review
+- `model: inherit`: planning and judgment-heavy review. These run on your session model, so start a planning or review session on your strongest model (switch with `/model`).
 - `model: opus`: execution and content work
 - `model: sonnet`: routine or mechanical steps
 
