@@ -153,6 +153,18 @@ Look for:
   re-run: if the test now fails, the coverage was fictional. This found a Critical
   where every fixture omitted a field the minting endpoint always sets, so the only
   credentials the suite exercised were the ones that cannot occur in production.
+- Where did each NEW test's input come from? A bug fix's first failing test must use
+  the ORIGINAL input that showed the bug (the captured request, the real row, the
+  real file), and a new feature needs at least one test on a real sample, each with a
+  line saying where it came from. An input written in the same sitting as the code is
+  shaped by the same understanding, so it passes on exactly the cases the author
+  already handled. Report a bug-fix test on invented input, or a feature with no real
+  sample, as a Warning naming the test; say so too when the diff shows no source for
+  an input. When the code PARSES that input (a command line, a log line, a config file,
+  an API reply), find a real example the repo itself shows (a usage guide, a doc, a
+  sample file, another caller) and compare its SHAPE with the test's: shell variables,
+  quoting, relative paths, line wrapping, extra fields. Feed the real one through the
+  code by hand; a shape the tests never use is a Warning even when every test passes.
 - Startup wiring: if the test file assembles application state by hand to skip a slow
   bootstrap, the real wiring is covered by nothing. Mutate a wiring line (delete it,
   or ignore its gate) and see whether anything fails. Four such mutations survived a
