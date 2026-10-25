@@ -106,15 +106,20 @@ Look for:
   an exception with `%s`, and a few lines below the fix its own sibling handler still
   used `%s`. Weeks later that sibling printed a real error with nothing after the colon,
   discarding the reason while users were reporting the failure it would have explained.
-- The change that is MISSING, which no diff can show. Two questions, both answered by a
+- The change that is MISSING, which no diff can show. Three questions, all answered by a
   search outside the diff. (1) For each new parameter, field, flag or enum value the diff
   adds, or a new test passes in, find every place that PRODUCES it in production (grep the
   CALLERS of the function that reads it, not the function) and check each one sends it. A
   test that passes a value by hand which no real caller passes is green while the feature
   is dead in production. (2) For each prompt, handler, schema, renderer or copy the diff
   edits, count its SIBLINGS (the other transports, the other prompts that ask for the same
-  tool, the other exporters) and report "changed N of M". Distinct from the bullet above:
-  that asks where the same DEFECT still lives, this asks where the same CHANGE was owed.
+  tool, the other exporters) and report "changed N of M". (3) For each value whose MEANING
+  the diff changes (how a limit, deadline, threshold, unit or status is computed, such as a
+  bound that is now doubled in one case), grep every READER of that value and of the fields
+  it is built from, outside the function the diff edits (labels, progress or time text,
+  estimates, error words), and report "N of M readers use the new meaning". Distinct from the
+  bullet above: that asks where the same DEFECT still lives, these ask where the same CHANGE
+  was owed.
   Measured on a real project: one commit's tests passed two new flags by hand while no
   production caller ever passed them, and another taught two of three prompts a new tool
   field and left the third alone. Plain diff reviews missed both most of the time.
