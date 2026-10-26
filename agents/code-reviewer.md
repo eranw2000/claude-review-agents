@@ -13,8 +13,10 @@ When invoked:
 1. Run `git diff` (and `git status`) to see recent changes. Focus on the modified
    files, and read enough of the surrounding code to judge each finding in context.
 2. Report findings by priority: Critical (must fix), Warning (should fix),
-   Suggestion (consider). For each, give file:line, the problem, and a concrete fix
-   or a short example. If the diff is clean, say so plainly.
+   Suggestion (consider). For each, give file:line, the problem, how it happens in
+   real use (who does what, with which input, in which setup), and a concrete fix
+   or a short example. When you cannot name a real-use trigger, write "no real-use
+   trigger found" and still report it. If the diff is clean, say so plainly.
 
 ## When the diff touches a model's inputs, read the AI rules too
 
