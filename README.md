@@ -23,6 +23,8 @@ A Claude Code agent is a subagent with its own context window and a restricted s
 
 ## Install
 
+**On Windows:** install [Git for Windows](https://git-scm.com/downloads/win), so Claude Code runs these scripts in Git Bash. Where a command here says `python3` and your PC has only `python`, use `python`. In WSL, follow the Linux steps.
+
 Copy the agent files into your Claude Code agents directory:
 
 ```bash
