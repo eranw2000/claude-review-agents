@@ -168,8 +168,9 @@ Deploy target (Blocker if ambiguous):
   were verified.)
 
 ### LLM SDK usage
-- Use `max_completion_tokens`, not `max_tokens`, for the GPT-5 family; gate custom
-  `temperature` on a model check (the GPT-5 family rejects non-default temperature).
+- Use `max_completion_tokens`, not `max_tokens`, for the GPT-5 family. Anthropic Opus 4.7+/5,
+  Sonnet 5 and Fable hard-400 on `temperature`: send it and retire it per model on a 400 that
+  names it; flag an Anthropic call that sends it with no such retry.
 - Re-check the token cap when adding fields to a JSON-mode schema; truncation drops
   every field, not just the last.
 - Forced-tool array fields are validated (a degenerate array can arrive as a JSON
