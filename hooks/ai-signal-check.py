@@ -94,12 +94,14 @@ WORD_PATTERNS = [
     (r"\bshowcas\w*\b", "showcase"),
     (r"\btapestry\b", "tapestry"),
     (r"\btestament\b", "testament"),
-    (r"\bunderscor\w*\b", "underscore"),
+    # The verb only. The noun is the `_` character, which docs have to be able to name.
+    (r"\bunderscor(?:ing|ed)\b|\bunderscores?\s+(?:the|that|how|why|what|a|an|its|our|their|this|these|those)\b",
+     "underscore"),
     (r"\bvibrant\b", "vibrant"),
     (r"\bbolster\w*\b", "bolstered"),
     (r"\binterplay\b", "interplay"),
     (r"\benduring\b", "enduring"),
-    (r"\benhanc\w*\b", "enhance/enhancing"),
+    (r"\b(?!enhance-slides\b(?!-))enhanc\w*\b", "enhance/enhancing"),  # enhance-slides is a skill's name
     (r"\bboasts?\b", "boasts"),
     (r"\bnestled\b", "nestled"),
     (r"\bgroundbreaking\b", "groundbreaking"),

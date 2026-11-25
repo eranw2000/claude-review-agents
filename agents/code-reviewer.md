@@ -108,7 +108,7 @@ Look for:
   an exception with `%s`, and a few lines below the fix its own sibling handler still
   used `%s`. Weeks later that sibling printed a real error with nothing after the colon,
   discarding the reason while users were reporting the failure it would have explained.
-- The change that is MISSING, which no diff can show. Three questions, all answered by a
+- The change that is MISSING, which no diff can show. Five questions, all answered by a
   search outside the diff. (1) For each new parameter, field, flag or enum value the diff
   adds, or a new test passes in, find every place that PRODUCES it in production (grep the
   CALLERS of the function that reads it, not the function) and check each one sends it. A
@@ -121,7 +121,12 @@ Look for:
   it is built from, outside the function the diff edits (labels, progress or time text,
   estimates, error words), and report "N of M readers use the new meaning". Distinct from the
   bullet above: that asks where the same DEFECT still lives, these ask where the same CHANGE
-  was owed.
+  was owed. (4) For each PROPERTY the diff reverses (a comment or docstring that said "never
+  stored" now says "stored"), grep every place a user is TOLD the old property (templates, help
+  text, guides) in every language the screens use, by the key term in that language, and
+  report "N of M statements updated". (5) For a NEW writer of a format the repo already writes
+  (an Excel or CSV export, an email, a PDF), open the existing writer and list the safety steps
+  it takes (cells as text, escaping, direction), then check the new one takes each.
   Measured on a real project: one commit's tests passed two new flags by hand while no
   production caller ever passed them, and another taught two of three prompts a new tool
   field and left the third alone. Plain diff reviews missed both most of the time.
